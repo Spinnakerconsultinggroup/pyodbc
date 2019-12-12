@@ -25,6 +25,10 @@
 #include <time.h>
 #include <stdarg.h>
 
+#ifdef WITH_NUMPY
+#include "npcontainer.h"
+#endif
+
 static PyObject* MakeConnectionString(PyObject* existing, PyObject* parts);
 
 PyObject* pModule = 0;
@@ -300,7 +304,9 @@ static bool import_types()
     GetData_init();
     if (!Params_init())
         return false;
-
+#ifdef WITH_NUMPY
+    NpContainer_init();
+#endif
     return true;
 }
 
